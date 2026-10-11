@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Undangan Ulang Tahun</title>
+<meta name="description" content="Undangan ulang tahun online">
+<meta property="og:title" content="Undangan Ulang Tahun">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Gochi+Hand&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pink-50: #fff6f9;
+  --pink-100: #ffe9f0;
+  --pink-200: #ffd3e1;
+  --pink-300: #ffb8cf;
+  --pink-400: #f994b5;
+  --pink-500: #ec6f9a;
+  --pink-600: #d14f80;
+  --ink: #8e2f5c;
+  --ink-soft: #a85b7f;
+  --cream: #fffaf6;
+  --yellow: #ffd36b;
+  --display: "Fredoka", "Baloo 2", system-ui, sans-serif;
+  --hand: "Gochi Hand", "Comic Sans MS", cursive;
+  --body: "Nunito", system-ui, sans-serif;
+}
+
+/* Alternative pink palettes, chosen in the editor */
+[data-theme="peach"] {
+  --pink-100: #ffece6; --pink-200: #ffd8cc; --pink-300: #ffbfae; --pink-400: #ff9f8e;
+  --pink-500: #f27b6e; --pink-600: #d65c55; --ink: #933d3d; --ink-soft: #b06560;
+}
+[data-theme="lilac"] {
+  --pink-100: #f7ebff; --pink-200: #ecd6fb; --pink-300: #ddbdf5; --pink-400: #c99be9;
+  --pink-500: #b27ad9; --pink-600: #955bbf; --ink: #6a3a8c; --ink-soft: #8a63a6;
+}
+[data-theme="bubblegum"] {
+  --pink-100: #ffe6f3; --pink-200: #ffc9e6; --pink-300: #ffa6d5; --pink-400: #ff7fc1;
+  --pink-500: #f554a8; --pink-600: #d8338c; --ink: #9a1f66; --ink-soft: #b9488a;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  font-family: var(--body);
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 20% 10%, #fff 0 2px, transparent 3px) 0 0 / 46px 46px,
+    linear-gradient(180deg, var(--pink-100), var(--pink-200));
+  min-height: 100vh;
+}
+[hidden] { display: none !important; }
+
+.page { padding: 22px 12px 90px; }
+.card {
+  position: relative;
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--cream);
+  border-radius: 34px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px -20px color-mix(in srgb, var(--pink-600) 45%, transparent);
+}
+
+/* ---------- sky ---------- */
+.sky {
+  position: relative;
+  height: 640px;
+  background:
+    radial-gradient(circle at 50% 120%, #fff7 0 30%, transparent 31%),
+    linear-gradient(180deg, var(--pink-200), var(--pink-100) 75%, var(--cream));
+}
+.sky::after { /* scalloped cloud edge into cream */
+  content: ""; position: absolute; left: -20px; right: -20px; bottom: -1px; height: 70px;
+  background: radial-gradient(circle at 50% 100%, var(--cream) 62%, transparent 63%) 0 100% / 110px 70px repeat-x;
+  z-index: 2;
+}
+.cloud { position: absolute; background: #fff; border-radius: 999px; opacity: .95; }
+.cloud::before, .cloud::after { content: ""; position: absolute; background: #fff; border-radius: 50%; }
+.cloud-a { width: 230px; height: 90px; top: 40px; left: -40px; }
+.cloud-a::before { width: 120px; height: 120px; top: -60px; left: 50px; }
+.cloud-a::after { width: 90px; height: 90px; top: -34px; left: 130px; }
+.cloud-b { width: 180px; height: 70px; top: 150px; right: -50px; }
+.cloud-b::before { width: 100px; height: 100px; top: -50px; left: 30px; }
+.cloud-b::after { width: 70px; height: 70px; top: -26px; left: 100px; }
+.cloud-c { width: 140px; height: 50px; top: 420px; left: -30px; opacity: .7; }
+.cloud-c::before { width: 70px; height: 70px; top: -34px; left: 30px; }
+
+.bunting { position: absolute; top: 0; right: -10px; width: 62%; z-index: 3; }
+.bunting .flags { transform-origin: 50% 0; animation: sway 4s ease-in-out infinite; }
+
+.invited {
+  position: absolute; top: 34px; left: 26px; z-index: 4;
+  font-family: var(--hand); font-size: 44px; line-height: .95; color: var(--ink);
+  transform: rotate(-8deg); width: 190px;
+}
+.invited .swoosh { display: block; width: 160px; color: var(--pink-500); margin-top: 2px; }
+.heart-sm { display: block; color: var(--pink-500); font-size: 22px; text-align: center; animation: beat 1.6s ease-in-out infinite; }
+
+.celebrate {
+  position: absolute; top: 160px; right: 18px; z-index: 4; width: 128px;
+  font-family: var(--hand); font-size: 27px; line-height: 1.05; color: var(--ink);
+  text-align: center; transform: rotate(-4deg);
+}
+
+.burst { position: absolute; width: 22px; height: 40px; }
+.burst::before, .burst::after { content: ""; position: absolute; width: 3px; height: 14px; border-radius: 3px; background: var(--pink-500); }
+.burst-l { left: -18px; top: 6px; }
+.burst-l::before { transform: rotate(-30deg); }
+.burst-l::after { top: 22px; transform: rotate(30deg); left: -4px; }
+
+.balloons { position: absolute; left: -6px; top: 210px; width: 140px; z-index: 3; }
+.balloon { animation: bob 4.5s ease-in-out infinite; }
+.balloon.b2 { animation-delay: -1.8s; }
+
+.frame-wrap { position: absolute; left: 50%; top: 70px; transform: translateX(-50%); z-index: 2; }
+.frame {
+  width: 380px; height: 440px; padding: 12px;
+  border-radius: 190px 190px 40px 40px;
+  background: #fff;
+  box-shadow: 0 10px 30px -10px color-mix(in srgb, var(--pink-600) 50%, transparent);
+  position: relative;
+}
+.frame::after {
+  content: ""; position: absolute; inset: -12px; border-radius: 202px 202px 50px 50px;
+  border: 3px dashed var(--pink-300); pointer-events: none;
+}
+.frame img {
+  width: 100%; height: 100%; display: block; object-fit: cover;
+  border-radius: 178px 178px 30px 30px; background: var(--pink-100);
+}
+.star { position: absolute; color: var(--yellow); text-shadow: 0 2px 0 #e9b647; animation: twinkle 2.4s ease-in-out infinite; }
+.s1 { top: -26px; left: -46px; font-size: 26px; }
+.s2 { top: 30px; right: -60px; font-size: 20px; animation-delay: -.6s; }
+.s3 { top: 220px; left: -40px; font-size: 18px; color: var(--pink-400); text-shadow: none; animation-delay: -1.2s; }
+.s4 { top: 300px; right: -46px; font-size: 30px; animation-delay: -1.8s; }
+
+.bear { position: absolute; left: 4px; bottom: 34px; width: 170px; z-index: 3; filter: drop-shadow(0 6px 4px #9c5a3a26); }
+.bear-arm { transform-origin: 140px 140px; animation: wave 1.8s ease-in-out infinite; }
+
+.candle { position: absolute; right: 22px; bottom: 54px; z-index: 3; text-align: center; }
+.candle .number {
+  font-family: var(--display); font-weight: 700; font-size: 150px; line-height: .9;
+  background: radial-gradient(circle, #fff 0 3px, transparent 3.6px) 0 0 / 16px 16px, var(--pink-400);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  -webkit-text-stroke: 4px #fff;
+  filter: drop-shadow(0 4px 0 var(--pink-600)) drop-shadow(0 8px 10px #0001);
+  max-width: 170px; overflow-wrap: anywhere;
+}
+.wick { width: 3px; height: 14px; background: #6b4a3a; margin: 0 auto; border-radius: 2px; }
+.flame {
+  width: 18px; height: 30px; margin: 0 auto;
+  background: radial-gradient(ellipse at 50% 70%, #fff6c2 0 25%, var(--yellow) 45%, #ff9d4d 80%);
+  border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%;
+  transform-origin: 50% 100%;
+  animation: flicker 1.2s ease-in-out infinite alternate;
+  box-shadow: 0 0 22px 6px #ffd36b88;
+}
+.burst-r { right: -28px; top: 60px; }
+.burst-r::before { transform: rotate(60deg); }
+.burst-r::after { top: 22px; transform: rotate(120deg); }
+
+/* ---------- titles ---------- */
+.titles { position: relative; text-align: center; padding: 0 24px; margin-top: -54px; z-index: 4; }
+.crown { width: 64px; display: block; margin: 0 auto -6px; position: relative; z-index: 2; animation: bob 3.5s ease-in-out infinite; }
+.ribbon { position: relative; width: min(88%, 440px); margin: 0 auto; }
+.ribbon .band {
+  position: relative; z-index: 1;
+  background: linear-gradient(180deg, var(--pink-400), var(--pink-500));
+  color: #fff; border-radius: 26px 26px 18px 18px / 40px 40px 18px 18px;
+  padding: 12px 18px 10px; box-shadow: 0 5px 0 var(--pink-600);
+  font-family: var(--display); text-shadow: 0 2px 0 color-mix(in srgb, var(--pink-600) 80%, black 0%);
+}
+.r-title { display: block; font-size: clamp(30px, 7vw, 46px); font-weight: 700; line-height: 1; }
+.r-sub {
+  display: inline-block; margin-top: 6px; font-size: clamp(22px, 5vw, 30px); font-weight: 600; line-height: 1;
+  background: var(--pink-600); padding: 4px 18px 6px; border-radius: 999px;
+}
+.tail { position: absolute; bottom: -22px; width: 92px; height: 58px; background: var(--pink-600); z-index: 0; }
+.tail-l { left: -54px; clip-path: polygon(0 20%, 100% 0, 100% 100%, 0 100%, 22% 60%); }
+.tail-r { right: -54px; clip-path: polygon(0 0, 100% 20%, 78% 60%, 100% 100%, 0 100%); }
+
+.to-guest {
+  margin: 26px auto 0; display: inline-block; padding: 8px 22px; border-radius: 16px;
+  background: #fff; border: 2px dashed var(--pink-300);
+}
+.to-guest small { display: block; color: var(--ink-soft); font-weight: 700; font-size: 13px; }
+.to-guest strong { font-family: var(--display); font-size: 22px; color: var(--pink-600); }
+
+.name { position: relative; margin: 26px 0 0; font-family: var(--display); line-height: 1.02; }
+.name-main { display: block; font-size: clamp(40px, 10vw, 66px); font-weight: 700; color: var(--ink); letter-spacing: -.5px; }
+.name-sub { display: block; font-size: clamp(28px, 7vw, 44px); font-weight: 600; color: var(--pink-500); }
+.star-dec { position: absolute; color: var(--yellow); font-size: 30px; text-shadow: 0 2px 0 #e9b647; top: -6px; animation: twinkle 2.6s ease-in-out infinite; }
+.star-dec.l { left: 0; }
+.star-dec.r { right: 0; animation-delay: -1.3s; }
+
+.divider { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 12px 0 4px; color: var(--pink-500); }
+.divider i { display: block; width: 90px; height: 3px; border-radius: 3px; background: var(--pink-400); }
+.divider span { font-size: 20px; }
+.divider.small i { width: 60px; }
+
+.message { max-width: 500px; margin: 14px auto 0; font-size: 17px; line-height: 1.6; color: var(--ink-soft); font-weight: 700; white-space: pre-line; }
+
+/* ---------- details ---------- */
+.details { padding: 26px 22px 6px; }
+.info {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  background: #fff; border: 3px dashed var(--pink-300); border-radius: 28px; padding: 18px 8px;
+}
+.item { display: flex; gap: 10px; align-items: flex-start; padding: 6px 12px; border-right: 2px solid var(--pink-200); min-width: 0; }
+.item:last-child { border: 0; }
+.ico { width: 42px; height: 42px; flex: none; }
+.item b { display: block; color: var(--pink-500); font-family: var(--display); font-weight: 600; font-size: 16px; margin-bottom: 4px; }
+.item span { display: block; font-size: 14.5px; font-weight: 700; line-height: 1.45; white-space: pre-line; overflow-wrap: anywhere; }
+.item small { display: block; font-size: 12.5px; line-height: 1.4; color: var(--ink-soft); margin-top: 2px; white-space: pre-line; }
+
+.countdown { margin-top: 22px; text-align: center; }
+.countdown p { font-family: var(--hand); font-size: 26px; margin: 0 0 10px; }
+.cd-row { display: flex; justify-content: center; gap: 10px; }
+.cd-row div {
+  width: 76px; padding: 10px 0 8px; border-radius: 20px; background: var(--pink-400); color: #fff;
+  box-shadow: 0 4px 0 var(--pink-600);
+}
+.cd-row strong { display: block; font-family: var(--display); font-size: 28px; line-height: 1; }
+.cd-row span { font-size: 12px; font-weight: 800; }
+
+.map-card { margin-top: 24px; background: var(--pink-50); border-radius: 28px; padding: 20px; text-align: center; border: 2px solid var(--pink-200); }
+.map-card h2, .gallery h2 { font-family: var(--display); font-weight: 600; font-size: 24px; margin: 0; color: var(--ink); }
+.address { margin: 6px 0 14px; font-weight: 700; color: var(--ink-soft); white-space: pre-line; }
+.map-box { border-radius: 20px; overflow: hidden; border: 5px solid #fff; box-shadow: 0 6px 18px -8px color-mix(in srgb, var(--pink-600) 50%, transparent); background: var(--pink-100); }
+.map-box iframe { display: block; width: 100%; height: 250px; border: 0; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; justify-content: center;
+  border: 0; cursor: pointer; text-decoration: none;
+  font: 700 16px var(--display); color: #fff; background: var(--pink-500);
+  padding: 12px 22px; border-radius: 999px; box-shadow: 0 4px 0 var(--pink-600);
+  transition: transform .15s;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--pink-600); }
+.btn svg { width: 20px; height: 20px; }
+.btn-map { margin-top: 16px; }
+.btn-soft { background: #fff; color: var(--pink-600); box-shadow: 0 4px 0 var(--pink-300); }
+.btn-ghost { background: transparent; color: var(--ink-soft); box-shadow: none; border: 2px solid var(--pink-200); }
+
+.gallery { margin-top: 24px; text-align: center; }
+.gallery-grid { margin-top: 12px; display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+.gallery-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 20px; border: 5px solid #fff; box-shadow: 0 4px 12px -6px #0003; }
+.gallery-grid img:nth-child(odd) { transform: rotate(-2deg); }
+.gallery-grid img:nth-child(even) { transform: rotate(2deg); }
+
+/* ---------- footer ---------- */
+.thanks {
+  position: relative; text-align: center; padding: 70px 100px 40px; margin-top: 10px;
+  background: linear-gradient(180deg, var(--cream), var(--pink-100));
+}
+.thanks::before {
+  content: ""; position: absolute; left: -20px; right: -20px; top: 0; height: 60px;
+  background: radial-gradient(circle at 50% 0, var(--cream) 62%, transparent 63%) 0 0 / 110px 60px repeat-x;
+}
+.thanks p { margin: 0; position: relative; }
+.closing { font-family: var(--hand); font-size: 28px; line-height: 1.15; }
+.signoff { font-weight: 800; color: var(--ink-soft); white-space: pre-line; }
+.share { margin-top: 18px; position: relative; z-index: 2; }
+.gift { position: absolute; bottom: 0; width: 110px; }
+.gift-l { left: -6px; }
+.gift-r { right: -4px; width: 96px; }
+
+/* ---------- edit button + modal ---------- */
+.edit-fab {
+  position: fixed; right: 16px; bottom: 16px; z-index: 20;
+  border: 0; cursor: pointer; padding: 10px 16px; border-radius: 999px;
+  font: 700 14px var(--display); color: var(--pink-600); background: #fffd;
+  box-shadow: 0 4px 14px -4px #0003; opacity: .8;
+}
+.edit-fab:hover { opacity: 1; }
+
+.modal { position: fixed; inset: 0; z-index: 30; background: #4a1d3566; display: flex; justify-content: flex-end; }
+.panel {
+  width: min(470px, 100%); height: 100%; overflow-y: auto; background: #fff; padding: 0 22px;
+  font-family: var(--body); color: #4d2b3d; box-shadow: -10px 0 40px #0003;
+}
+.panel-head { position: sticky; top: 0; background: #fff; display: flex; align-items: center; justify-content: space-between; padding: 18px 0 8px; z-index: 2; }
+.panel-head h2 { margin: 0; font-family: var(--display); color: var(--ink); }
+.x { border: 0; background: var(--pink-100); color: var(--ink); width: 36px; height: 36px; border-radius: 50%; font-size: 22px; cursor: pointer; }
+.hint { color: #8a6b7b; line-height: 1.5; font-size: 14px; }
+.err { color: #c62859; font-weight: 700; min-height: 1em; font-size: 14px; }
+.group { margin: 16px 0 8px; padding-top: 12px; border-top: 2px dashed var(--pink-200); font-family: var(--display); font-weight: 600; color: var(--pink-600); font-size: 17px; }
+.field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; font-size: 13px; font-weight: 800; color: #6d4a5c; }
+.field small { font-weight: 600; color: #9b8290; }
+.field input, .field textarea, .field select {
+  width: 100%; padding: 10px 12px; border: 2px solid var(--pink-200); border-radius: 12px;
+  font: 500 15px var(--body); color: #3d2231; background: var(--pink-50);
+}
+.field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: var(--pink-400); background: #fff; }
+.field textarea { min-height: 70px; resize: vertical; }
+.photo-edit { display: flex; gap: 12px; align-items: center; }
+.photo-edit img { width: 74px; height: 74px; object-fit: cover; border-radius: 16px; border: 3px solid var(--pink-200); }
+.photo-edit .btn, .mini { font-size: 14px; padding: 8px 14px; }
+.thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 10px; }
+.thumbs div { position: relative; }
+.thumbs img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; display: block; }
+.thumbs button { position: absolute; top: -6px; right: -6px; width: 24px; height: 24px; border-radius: 50%; border: 0; background: #c62859; color: #fff; cursor: pointer; font-weight: 800; }
+.themes { display: flex; gap: 10px; flex-wrap: wrap; }
+.themes button { border: 3px solid transparent; border-radius: 999px; padding: 6px 12px 6px 6px; display: flex; align-items: center; gap: 6px; cursor: pointer; background: #fff7fa; font: 700 13px var(--body); color: #6d4a5c; }
+.themes button i { width: 22px; height: 22px; border-radius: 50%; display: block; }
+.themes button.on { border-color: var(--pink-400); }
+.linkgen { display: flex; gap: 8px; }
+.linkgen input { flex: 1; }
+.actions { display: flex; gap: 10px; justify-content: flex-end; align-items: center; padding: 14px 0 20px; }
+.actions.sticky { position: sticky; bottom: 0; background: #fff; border-top: 2px solid var(--pink-100); flex-wrap: wrap; }
+.status { margin-right: auto; font-size: 13px; font-weight: 700; color: #8a6b7b; }
+
+/* ---------- animations ---------- */
+@keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes sway { 0%,100% { transform: rotate(-1.2deg); } 50% { transform: rotate(1.2deg); } }
+@keyframes beat { 0%,100% { transform: scale(1); } 50% { transform: scale(1.25); } }
+@keyframes twinkle { 0%,100% { transform: scale(1) rotate(0); opacity: 1; } 50% { transform: scale(.75) rotate(20deg); opacity: .6; } }
+@keyframes wave { 0%,100% { transform: rotate(0); } 50% { transform: rotate(-16deg); } }
+@keyframes flicker { from { transform: scaleY(1) rotate(-3deg); } to { transform: scaleY(1.12) rotate(3deg); } }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+
+/* ---------- responsive ---------- */
+@media (max-width: 600px) {
+  .page { padding: 0 0 80px; }
+  .card { border-radius: 0; }
+  .sky { height: 470px; }
+  .invited { font-size: 30px; top: 22px; left: 14px; width: 130px; }
+  .invited .swoosh { width: 110px; }
+  .celebrate { font-size: 19px; width: 92px; top: 120px; right: 4px; }
+  .bunting { width: 66%; }
+  .frame-wrap { top: 68px; }
+  .frame { width: 238px; height: 290px; padding: 8px; border-radius: 120px 120px 28px 28px; }
+  .frame::after { inset: -9px; border-radius: 128px 128px 34px 34px; }
+  .frame img { border-radius: 112px 112px 22px 22px; }
+  .balloons { width: 86px; top: 150px; left: -10px; }
+  .bear { width: 110px; bottom: 34px; left: -4px; }
+  .candle { right: 6px; bottom: 50px; }
+  .candle .number { font-size: 92px; -webkit-text-stroke: 3px #fff; max-width: 110px; }
+  .flame { width: 13px; height: 22px; }
+  .titles { margin-top: -44px; }
+  .tail { width: 64px; height: 44px; bottom: -16px; }
+  .tail-l { left: -30px; } .tail-r { right: -30px; }
+  .star-dec { font-size: 20px; }
+  .message { font-size: 15.5px; }
+  .details { padding: 22px 14px 6px; }
+  .info { grid-template-columns: 1fr; padding: 6px 10px; }
+  .item { border-right: 0; border-bottom: 2px solid var(--pink-200); padding: 12px 8px; }
+  .cd-row div { width: 66px; }
+  .thanks { padding: 60px 70px 110px; }
+  .closing { font-size: 23px; }
+  .gift { width: 84px; } .gift-r { width: 72px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Reusable SVG patterns -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <pattern id="dots" width="14" height="14" patternUnits="userSpaceOnUse">
+      <circle cx="4" cy="4" r="2.6" fill="#fff" opacity=".85"/>
+      <circle cx="11" cy="11" r="2.6" fill="#fff" opacity=".85"/>
+    </pattern>
+    <pattern id="stripes" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+      <rect width="10" height="10" fill="var(--yellow)"/>
+      <rect width="4" height="10" fill="#fff" opacity=".7"/>
+    </pattern>
+  </defs>
+</svg>
+
+<div class="page">
+  <article class="card" id="card">
+
+    <!-- ===== Top / sky ===== -->
+    <header class="sky">
+      <div class="cloud cloud-a"></div>
+      <div class="cloud cloud-b"></div>
+      <div class="cloud cloud-c"></div>
+
+      <svg class="bunting" viewBox="0 0 420 120" aria-hidden="true">
+        <path d="M0 8 Q210 70 420 4" fill="none" stroke="var(--pink-500)" stroke-width="2"/>
+        <g class="flags">
+          <path d="M18 14 L62 26 L32 78Z" fill="var(--pink-400)"/><path d="M18 14 L62 26 L32 78Z" fill="url(#dots)"/>
+          <path d="M80 30 L124 40 L96 94Z" fill="url(#stripes)"/>
+          <path d="M142 43 L188 48 L160 104Z" fill="var(--pink-300)"/><path d="M142 43 L188 48 L160 104Z" fill="url(#dots)"/>
+          <path d="M208 50 L254 48 L232 106Z" fill="#fff"/>
+          <path d="M274 46 L320 38 L302 96Z" fill="var(--pink-400)"/><path d="M274 46 L320 38 L302 96Z" fill="url(#dots)"/>
+          <path d="M338 34 L382 22 L368 82Z" fill="url(#stripes)"/>
+          <path d="M398 16 L430 4 L424 60Z" fill="var(--pink-300)"/>
+        </g>
+      </svg>
+
+      <div class="invited">
+        <span data-key="eyebrow">You're Invited!</span>
+        <svg class="swoosh" viewBox="0 0 180 20" aria-hidden="true"><path d="M4 14 Q90 2 176 8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+        <span class="heart-sm">♥</span>
+      </div>
+
+      <div class="celebrate">
+        <span class="burst burst-l" aria-hidden="true"></span>
+        <span data-key="sideNote">Come and Celebrate with us</span>
+        <span class="heart-sm">♥</span>
+      </div>
+
+      <!-- balloons -->
+      <svg class="balloons" viewBox="0 0 150 260" aria-hidden="true">
+        <path d="M58 128 Q50 170 70 200 Q86 226 74 260" fill="none" stroke="var(--pink-500)" stroke-width="1.6"/>
+        <path d="M108 140 Q118 180 96 212 Q84 236 92 260" fill="none" stroke="#e7c3cf" stroke-width="1.6"/>
+        <g class="balloon b2">
+          <ellipse cx="108" cy="88" rx="40" ry="50" fill="#fff"/>
+          <ellipse cx="96" cy="70" rx="9" ry="15" fill="#fde7ee" transform="rotate(25 96 70)"/>
+          <path d="M103 137 L113 137 L108 145Z" fill="#fff"/>
+        </g>
+        <g class="balloon b1">
+          <ellipse cx="58" cy="74" rx="46" ry="56" fill="var(--pink-400)"/>
+          <ellipse cx="58" cy="74" rx="46" ry="56" fill="url(#dots)"/>
+          <ellipse cx="40" cy="52" rx="10" ry="17" fill="#fff" opacity=".45" transform="rotate(25 40 52)"/>
+          <path d="M52 128 L64 128 L58 137Z" fill="var(--pink-400)"/>
+        </g>
+      </svg>
+
+      <!-- photo -->
+      <div class="frame-wrap">
+        <div class="frame">
+          <img id="heroPhoto" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22400%22 viewBox=%220 0 400 400%22%3E%3Crect width=%22400%22 height=%22400%22 rx=%22200%22 fill=%22%23ffe9f0%22/%3E%3Ctext x=%2250%25%22 y=%2258%25%22 text-anchor=%22middle%22 font-size=%22130%22%3E%F0%9F%8E%82%3C/text%3E%3C/svg%3E" alt="Foto yang berulang tahun">
+        </div>
+        <span class="star s1">★</span><span class="star s2">★</span><span class="star s3">✦</span><span class="star s4">★</span>
+      </div>
+
+      <!-- teddy bear -->
+      <svg class="bear" viewBox="0 0 200 220" aria-hidden="true">
+        <g class="bear-body">
+          <ellipse cx="98" cy="182" rx="58" ry="44" fill="#c98d5b"/>
+          <ellipse cx="98" cy="190" rx="34" ry="28" fill="#f3d6b4"/>
+        </g>
+        <g class="bear-arm">
+          <ellipse cx="158" cy="122" rx="17" ry="30" fill="#c98d5b" transform="rotate(32 158 122)"/>
+          <ellipse cx="166" cy="104" rx="10" ry="12" fill="#f3d6b4" transform="rotate(32 166 104)"/>
+        </g>
+        <circle cx="44" cy="52" r="24" fill="#c98d5b"/><circle cx="44" cy="52" r="13" fill="#f3d6b4"/>
+        <circle cx="146" cy="52" r="24" fill="#c98d5b"/><circle cx="146" cy="52" r="13" fill="#f3d6b4"/>
+        <ellipse cx="95" cy="98" rx="66" ry="58" fill="#d49a66"/>
+        <ellipse cx="95" cy="118" rx="28" ry="21" fill="#f3d6b4"/>
+        <circle cx="70" cy="92" r="6.5" fill="#3b2a26"/><circle cx="72" cy="90" r="2" fill="#fff"/>
+        <circle cx="120" cy="92" r="6.5" fill="#3b2a26"/><circle cx="122" cy="90" r="2" fill="#fff"/>
+        <ellipse cx="95" cy="110" rx="9" ry="6.5" fill="#3b2a26"/>
+        <path d="M84 122 Q95 132 106 122" fill="none" stroke="#3b2a26" stroke-width="3" stroke-linecap="round"/>
+        <ellipse cx="54" cy="112" rx="11" ry="7" fill="var(--pink-400)" opacity=".7"/>
+        <ellipse cx="136" cy="112" rx="11" ry="7" fill="var(--pink-400)" opacity=".7"/>
+        <g class="bow">
+          <path d="M95 152 L62 136 Q54 152 62 168Z" fill="var(--pink-500)"/>
+          <path d="M95 152 L128 136 Q136 152 128 168Z" fill="var(--pink-500)"/>
+          <path d="M95 152 L62 136 Q54 152 62 168Z" fill="url(#dots)" opacity=".7"/>
+          <path d="M95 152 L128 136 Q136 152 128 168Z" fill="url(#dots)" opacity=".7"/>
+          <circle cx="95" cy="152" r="9" fill="var(--pink-600)"/>
+        </g>
+      </svg>
+
+      <!-- number candle -->
+      <div class="candle" aria-hidden="true">
+        <div class="flame"></div>
+        <div class="wick"></div>
+        <div class="number" data-key="candleNumber">1</div>
+        <span class="burst burst-r"></span>
+      </div>
+    </header>
+
+    <!-- ===== Title ===== -->
+    <section class="titles">
+      <svg class="crown" viewBox="0 0 100 64" aria-hidden="true">
+        <path d="M8 56 L4 16 L28 36 L50 6 L72 36 L96 16 L92 56Z" fill="var(--yellow)" stroke="#e4a93a" stroke-width="3" stroke-linejoin="round"/>
+        <circle cx="4" cy="14" r="5" fill="var(--yellow)" stroke="#e4a93a" stroke-width="2"/>
+        <circle cx="50" cy="6" r="5" fill="var(--yellow)" stroke="#e4a93a" stroke-width="2"/>
+        <circle cx="96" cy="14" r="5" fill="var(--yellow)" stroke="#e4a93a" stroke-width="2"/>
+      </svg>
+      <div class="ribbon">
+        <span class="tail tail-l"></span><span class="tail tail-r"></span>
+        <div class="band">
+          <span class="r-title" data-key="ribbonTitle">Ulang Tahun</span>
+          <span class="r-sub" data-key="ribbonSub">ke-1</span>
+        </div>
+      </div>
+
+      <div class="to-guest" id="toGuest" hidden>
+        <small data-key="guestLabel">Kepada Yth.</small>
+        <strong id="guestName"></strong>
+      </div>
+
+      <h1 class="name">
+        <span class="star-dec l" aria-hidden="true">★</span>
+        <span class="name-main" data-key="nameMain">Nama Anak</span>
+        <span class="name-sub" data-key="nameSub"></span>
+        <span class="star-dec r" aria-hidden="true">★</span>
+      </h1>
+      <div class="divider" aria-hidden="true"><i></i><span>♥</span><i></i></div>
+
+      <p class="message" data-key="message">Kami mengundang keluarga dan teman-teman untuk hadir dan merayakan hari bahagia bersama.</p>
+    </section>
+
+    <!-- ===== Details ===== -->
+    <section class="details">
+      <div class="info">
+        <div class="item">
+          <svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="9" width="38" height="34" rx="7" fill="var(--pink-100)" stroke="var(--pink-500)" stroke-width="3"/><path d="M5 19h38" stroke="var(--pink-500)" stroke-width="3"/><path d="M15 5v8M33 5v8" stroke="var(--pink-500)" stroke-width="3.5" stroke-linecap="round"/><g fill="var(--pink-500)"><rect x="12" y="25" width="6" height="5" rx="1.5"/><rect x="21" y="25" width="6" height="5" rx="1.5"/><rect x="30" y="25" width="6" height="5" rx="1.5"/><rect x="12" y="33" width="6" height="5" rx="1.5"/><rect x="21" y="33" width="6" height="5" rx="1.5"/></g></svg>
+          <div><b data-key="dateLabel">Hari / Tanggal</b><span data-key="date">Hari, tanggal acara</span></div>
+        </div>
+        <div class="item">
+          <svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19" fill="var(--pink-100)" stroke="var(--pink-500)" stroke-width="3.5"/><path d="M24 13v12h9" fill="none" stroke="var(--pink-500)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div><b data-key="timeLabel">Waktu</b><span data-key="time">16.00 WITA
+s.d Selesai</span></div>
+        </div>
+        <div class="item">
+          <svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="42" rx="11" ry="3.5" fill="var(--pink-200)"/><path d="M24 41s-13-13-13-23a13 13 0 0 1 26 0c0 10-13 23-13 23z" fill="var(--pink-500)"/><circle cx="24" cy="18" r="5" fill="#fff"/></svg>
+          <div><b data-key="placeLabel">Tempat</b><span data-key="place">Rumah kami</span><small data-key="placeDetail">Alamat lengkap rumah</small></div>
+        </div>
+      </div>
+
+      <div class="countdown" id="countdown" hidden>
+        <p data-key="countdownTitle">Menuju hari bahagia</p>
+        <div class="cd-row">
+          <div><strong id="cdD">0</strong><span>Hari</span></div>
+          <div><strong id="cdH">0</strong><span>Jam</span></div>
+          <div><strong id="cdM">0</strong><span>Menit</span></div>
+          <div><strong id="cdS">0</strong><span>Detik</span></div>
+        </div>
+      </div>
+
+      <div class="map-card" id="mapCard">
+        <h2><span aria-hidden="true">📍</span> <span data-key="mapTitle">Lokasi Acara</span></h2>
+        <p class="address" data-key="address">Alamat acara akan ditambahkan di sini.</p>
+        <div class="map-box"><iframe id="mapFrame" title="Peta lokasi acara" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+        <a class="btn btn-map" id="mapLink" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s-7-7-7-12.5a7 7 0 0 1 14 0C19 15 12 22 12 22z" fill="currentColor"/><circle cx="12" cy="9.5" r="2.6" fill="#fff"/></svg>
+          <span data-key="mapButton">Buka di Google Maps</span>
+        </a>
+      </div>
+
+      <div class="gallery" id="gallery" hidden>
+        <h2 data-key="galleryTitle">Momen Manis</h2>
+        <div class="gallery-grid" id="galleryGrid"></div>
+      </div>
+    </section>
+
+    <!-- ===== Footer ===== -->
+    <footer class="thanks">
+      <svg class="gift gift-l" viewBox="0 0 120 120" aria-hidden="true">
+        <rect x="14" y="48" width="92" height="66" rx="8" fill="var(--pink-400)"/><rect x="14" y="48" width="92" height="66" rx="8" fill="url(#dots)"/>
+        <rect x="8" y="36" width="104" height="22" rx="6" fill="var(--pink-500)"/>
+        <rect x="52" y="36" width="16" height="78" fill="var(--yellow)"/>
+        <path d="M60 36 C40 4 14 18 30 34Z M60 36 C80 4 106 18 90 34Z" fill="var(--yellow)" stroke="#e4a93a" stroke-width="2"/>
+      </svg>
+      <p>
+        <span data-key="closing" class="closing">Terima kasih atas doa dan kehadirannya</span>
+      </p>
+      <div class="divider small" aria-hidden="true"><i></i><span>♥</span><i></i></div>
+      <p class="signoff" data-key="signoff">Salam hangat, keluarga kami</p>
+      <div class="share">
+        <a class="btn btn-soft" id="waShare" target="_blank" rel="noopener">💬 Bagikan via WhatsApp</a>
+      </div>
+      <svg class="gift gift-r" viewBox="0 0 120 120" aria-hidden="true">
+        <rect x="30" y="54" width="62" height="62" rx="8" fill="var(--pink-300)"/><rect x="30" y="54" width="62" height="62" rx="8" fill="url(#dots)"/>
+        <rect x="24" y="44" width="74" height="18" rx="5" fill="var(--pink-500)"/>
+        <rect x="54" y="44" width="14" height="72" fill="#fff"/>
+        <path d="M61 44 C46 16 24 26 36 42Z M61 44 C76 16 98 26 86 42Z" fill="#fff" stroke="var(--pink-500)" stroke-width="2.5"/>
+      </svg>
+    </footer>
+  </article>
+
+  <button class="edit-fab" id="editBtn" type="button" title="Edit undangan">✎ Edit</button>
+</div>
+
+<!-- ===== Editor ===== -->
+<div class="modal" id="modal" hidden>
+  <div class="panel" role="dialog" aria-modal="true" aria-labelledby="panelTitle">
+    <div class="panel-head"><h2 id="panelTitle">Edit undangan 🎀</h2><button class="x" id="closeBtn" type="button" aria-label="Tutup">×</button></div>
+    <p class="hint">Perubahan tersimpan di browser ini. Untuk memperbarui undangan di Netlify, pilih “Unduh HTML untuk Netlify”, lalu unggah file hasil unduhan.</p>
+    <div id="editorFields"></div>
+    <div class="actions sticky"><button class="btn btn-ghost" id="closeBtn2" type="button">Tutup</button><button class="btn" id="saveBtn" type="button">Simpan</button><button class="btn btn-soft" id="exportBtn" type="button">Unduh HTML untuk Netlify</button></div>
+  </div>
+</div>
+<script>
+window.__INVITATION_DATA__ = null;
+const PLACEHOLDER = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22400%22 viewBox=%220 0 400 400%22%3E%3Crect width=%22400%22 height=%22400%22 rx=%22200%22 fill=%22%23ffe9f0%22/%3E%3Ctext x=%2250%25%22 y=%2258%25%22 text-anchor=%22middle%22 font-size=%22130%22%3E%F0%9F%8E%82%3C/text%3E%3C/svg%3E';
+const DEFAULTS = {eyebrow:'Kami mengundang Anda',sideNote:'Mari rayakan bersama',candleNumber:'1',ribbonTitle:'Ulang Tahun',ribbonSub:'ke-1',guestLabel:'Kepada Yth.',nameMain:'Nama Anak',nameSub:'',message:'Kami mengundang keluarga dan teman-teman untuk hadir dan merayakan hari bahagia bersama.',dateLabel:'Hari / Tanggal',date:'Hari, tanggal acara',timeLabel:'Waktu',time:'Waktu acara',placeLabel:'Tempat',place:'Rumah kami',placeDetail:'Alamat lengkap rumah',countdownTitle:'Menuju hari bahagia',mapTitle:'Lokasi Acara',address:'Alamat acara akan ditambahkan di sini.',mapButton:'Buka di Google Maps',galleryTitle:'Momen Manis',closing:'Terima kasih atas doa dan kehadirannya',signoff:'Salam hangat, keluarga kami',photo:'',map:''};
+let data={...DEFAULTS,...(window.__INVITATION_DATA__||{})};
+try{data={...data,...JSON.parse(localStorage.getItem('invitePosterNetlifyV1')||'{}')}}catch(e){}
+const labels={eyebrow:'Tulisan pembuka',sideNote:'Tulisan samping',candleNumber:'Angka lilin',ribbonTitle:'Tulisan pita',ribbonSub:'Tulisan kecil pita',nameMain:'Nama utama',nameSub:'Nama tambahan',message:'Pesan undangan',dateLabel:'Label tanggal',date:'Hari dan tanggal',timeLabel:'Label waktu',time:'Waktu acara',placeLabel:'Label tempat',place:'Tempat singkat',placeDetail:'Alamat ringkas',mapTitle:'Judul lokasi',address:'Alamat lengkap',mapButton:'Tulisan tombol Maps',closing:'Ucapan penutup',signoff:'Nama pengirim'};
+const longFields=new Set(['message','date','time','placeDetail','address']);
+function mapHref(){return data.map||('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(data.address||data.place||''))}
+function render(){document.querySelectorAll('[data-key]').forEach(el=>{const k=el.dataset.key;if(k in data)el.textContent=data[k]});const pic=document.getElementById('heroPhoto');if(pic)pic.src=data.photo||PLACEHOLDER;const q=data.address||data.place||'Kupang';const frame=document.getElementById('mapFrame');if(frame)frame.src='https://www.google.com/maps?q='+encodeURIComponent(q)+'&output=embed';const link=document.getElementById('mapLink');if(link)link.href=mapHref();const wa=document.getElementById('waShare');if(wa){const text='Undangan ulang tahun: '+data.nameMain+' '+data.nameSub+' — '+location.href;wa.href='https://wa.me/?text='+encodeURIComponent(text)}}
+function saveData(){document.querySelectorAll('[data-field]').forEach(el=>data[el.dataset.field]=el.value.trim());try{localStorage.setItem('invitePosterNetlifyV1',JSON.stringify(data))}catch(e){}render()}
+function buildEditor(){const box=document.getElementById('editorFields');box.innerHTML='';for(const [key,label] of Object.entries(labels)){const wrap=document.createElement('label');wrap.className='field';wrap.append(document.createTextNode(label));const input=document.createElement(longFields.has(key)?'textarea':'input');input.dataset.field=key;input.value=data[key]||'';wrap.append(input);box.append(wrap)}const photoWrap=document.createElement('label');photoWrap.className='field';photoWrap.append(document.createTextNode('Foto utama'));const photo=document.createElement('input');photo.type='file';photo.accept='image/*';photo.id='photoUpload';photoWrap.append(photo);box.append(photoWrap);const mapWrap=document.createElement('label');mapWrap.className='field';mapWrap.append(document.createTextNode('Link Google Maps (opsional)'));const map=document.createElement('input');map.type='url';map.value=data.map||'';map.placeholder='Tempel link Bagikan dari Google Maps';map.dataset.field='map';mapWrap.append(map);box.append(mapWrap);photo.onchange=()=>{const f=photo.files&&photo.files[0];if(!f)return;const reader=new FileReader();reader.onload=()=>{data.photo=String(reader.result);render()};reader.readAsDataURL(f)}}
+function openEditor(){buildEditor();document.getElementById('modal').hidden=false}
+function closeEditor(){document.getElementById('modal').hidden=true}
+function exportHTML(){saveData();const modal=document.getElementById('modal');const wasOpen=!modal.hidden;modal.hidden=true;let html='<!doctype html>\n'+document.documentElement.outerHTML;if(wasOpen)modal.hidden=false;const safe=JSON.stringify(data).replace(/</g,'\\u003c');html=html.replace('window.__INVITATION_DATA__ = null;','window.__INVITATION_DATA__ = '+safe+';');const blob=new Blob([html],{type:'text/html;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='index.html';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+document.getElementById('editBtn').addEventListener('click',openEditor);document.getElementById('closeBtn').addEventListener('click',closeEditor);document.getElementById('closeBtn2').addEventListener('click',closeEditor);document.getElementById('saveBtn').addEventListener('click',()=>{saveData();closeEditor()});document.getElementById('exportBtn').addEventListener('click',exportHTML);document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeEditor()});render();
+</script>
+</body>
+</html>
+
